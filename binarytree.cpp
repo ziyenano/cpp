@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stack>
+#include <queue>
 using namespace std;
 
 const char NA = '?';
@@ -17,6 +18,12 @@ public:
     void preorder(BTNode* T);
     void postorder(BTNode* T);
     void midorder_norec(BTNode* T);
+    //层次遍历二叉树
+    void inorder(BTNode* T);
+    //按层次遍历计算二叉树高
+    int calc_height1(BTNode* T);
+    //递归求解二叉树高
+    int calc_height2(BTNode* T);
 };
 
 BTNode* BinaryTree::createtree(char arr[], int idx, int size) {
@@ -79,6 +86,60 @@ void BinaryTree::postorder(BTNode* T) {
     cout << T->data << endl;
 }
 
+void BinaryTree::inorder(BTNode* T) {
+    if (T == NULL) {
+        return;
+    } 
+    queue<BTNode*> qu;
+    qu.push(T); 
+    while(!qu.empty()) { 
+        BTNode* P = qu.front();
+        qu.pop();
+        cout << P->data << endl;
+        if(P->l != NULL) {
+            qu.push(P->l); 
+        }
+        if(P->r != NULL) {
+            qu.push(P->r); 
+        }
+    }
+}
+
+int BinaryTree::calc_height1(BTNode* T) {
+    if (T == NULL) {
+        return 0;
+    } 
+    int depth = 0;
+    queue<BTNode*> qu;
+    qu.push(T); 
+    BTNode* level = T;
+    while(!qu.empty()) { 
+        BTNode* P = qu.front(); 
+        qu.pop();
+        if(P->l != NULL) {
+            qu.push(P->l); 
+        }
+        if(P->r != NULL) {
+            qu.push(P->r); 
+        }
+        if (P == level) {
+            depth += 1;
+            level = qu.back();
+        }
+    }
+    return depth;
+}
+
+int BinaryTree::calc_height2(BTNode* T) {
+    if (T == NULL) {
+        return 0;
+    } 
+    int a = calc_height2(T->l);  
+    int b = calc_height2(T->r);  
+    return a > b ? (a+1) : (b+1);
+}
+
+
 int main(int argc, char *argv[]) {
     //数组为满二叉树
     char arr[] = {'a', 'b', 'c', NA, 'd', 'e', NA, NA, NA, 'f', 'g'}; 
@@ -91,5 +152,11 @@ int main(int argc, char *argv[]) {
     p.preorder(T);
     cout << "=========" << endl;
     p.postorder(T);
+    cout << "=========" << endl;
+    p.inorder(T);
+    cout << "=========" << endl;
+    cout << p.calc_height1(T) << endl;
+    cout << "=========" << endl;
+    cout << p.calc_height2(T) << endl;
     return 0;
 }
