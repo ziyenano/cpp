@@ -24,6 +24,8 @@ public:
     int calc_height1(BTNode* T);
     //递归求解二叉树高
     int calc_height2(BTNode* T);
+    //反转二叉树
+    void reverse(BTNode* T);
 };
 
 BTNode* BinaryTree::createtree(char arr[], int idx, int size) {
@@ -139,6 +141,27 @@ int BinaryTree::calc_height2(BTNode* T) {
     return a > b ? (a+1) : (b+1);
 }
 
+void BinaryTree::reverse(BTNode* T) {
+    if (T == NULL) {
+       return; 
+    }
+    stack<BTNode*> st;
+    st.push(T);
+    while(!st.empty()) {
+        BTNode* P = st.top();
+        st.pop();
+        BTNode* tmp = P->l;
+        P->l = P->r;
+        P->r = tmp;
+        if (P->l != NULL) {
+           st.push(P->l); 
+        }
+        if (P->r != NULL) {
+           st.push(P->r); 
+        }
+    }
+}
+
 
 int main(int argc, char *argv[]) {
     //数组为满二叉树
@@ -158,5 +181,8 @@ int main(int argc, char *argv[]) {
     cout << p.calc_height1(T) << endl;
     cout << "=========" << endl;
     cout << p.calc_height2(T) << endl;
+    cout << "=========" << endl;
+    p.reverse(T);
+    p.inorder(T);
     return 0;
 }
