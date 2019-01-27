@@ -1,5 +1,4 @@
 #include <iostream>
-#include <queue>
 using namespace std;
 const int NIL = -1; 
 
@@ -10,7 +9,6 @@ typedef struct node {
     struct node* r;
     struct node* p;
 } BsNode;
-
 
 class BsearchTree {
 public:
@@ -178,26 +176,26 @@ int BsearchTree::del(BsNode* T, BsNode* z) {
 }
 
 int main(int argc, char *argv[]) {
-    BsearchTree ptr = BsearchTree();
+    BsearchTree obj = BsearchTree();
     int arr[] = {15, 6, 18, 3, 7, 17, 20, 2, 4, 13, 9}; 
     int size = sizeof(arr) / sizeof(int);
     //insert方式生成二叉树
-    BsNode* T = ptr.createtree(arr, size); 
-    ptr.midorder(T);
+    BsNode* T = obj.createtree(arr, size); 
+    obj.midorder(T);
     cout << "=========" << endl;
-    cout << ptr.maxiumn(T)->key <<endl;
-    cout << ptr.miniumn(T)->key <<endl;
-    cout << "successor of key 13: " << ptr.successor(ptr.search(T, 13))->key <<endl;
+    cout << obj.maxiumn(T)->key <<endl;
+    cout << obj.miniumn(T)->key <<endl;
+    cout << "successor of key 13: " << obj.successor(obj.search(T, 13))->key <<endl;
     cout << "=========" << endl;
     BsNode* z = new BsNode;
     z->key = 10;
     z->l = NULL;
     z->r = NULL;
-    ptr.insert(T, z); 
-    ptr.midorder(T);
+    obj.insert(T, z); 
+    obj.midorder(T);
     cout << "=========" << endl;
-    ptr.del(T, ptr.search(T, 13)); 
-    ptr.midorder(T);
+    obj.del(T, obj.search(T, 13)); 
+    obj.midorder(T);
     cout << "=========" << endl;
     return 0;
 }
