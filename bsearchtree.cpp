@@ -95,7 +95,7 @@ BsNode* BsearchTree::miniumn(BsNode* T) {
 
 BsNode* BsearchTree::successor(BsNode* T) {
     if (T->r != NULL) {
-       return maxiumn(T->r); 
+       return miniumn(T->r); 
     }
     BsNode* P = T->p;
     //如果右孩子节点为空, 后继是T的最底层祖先节点R, 
